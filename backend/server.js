@@ -11,7 +11,7 @@ const rateLimit = require("express-rate-limit");
 var server = express();
 
 // Authorisations
-var app   = express();
+var app  = express();
 var cors = require('cors');
 app.use(cors({origin: true, credentials: true}));
 app.use(helmet());
