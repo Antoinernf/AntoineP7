@@ -1,23 +1,26 @@
 // Imports
-var express     = require('express');
-var bodyParser  = require('body-parser');
-var apiRouter   = require('./apiRouter').router;
+const express     = require('express');
+const apiRouter   = require('./apiRouter').router;
+const morgan      = require("morgan");
+const helmet      = require("helmet");
+const rateLimit   = require("express-rate-limit");
+require('dotenv').config({path: './config/.env'});
 
-// Sécurité
-const helmet = require("helmet");
-const rateLimit = require("express-rate-limit");
-
-// Instantiate server
+// Création d'app express
 var server = express();
 
-// Authorisations
-var app  = express();
-var cors = require('cors');
-app.use(cors({origin: true, credentials: true}));
-app.use(helmet());
+// Sécurisation
+server.use(helmet());
 
-// AUTORISATION DE L'UTILILISATION DE L'API
-app.use(function(req, res, next) {
+// logger les requests et responses
+server.use(morgan("dev"));
+
+// AUTORISATION DE L'UTILILISATION DE L'API AVEC CORS
+var cors = require('cors');
+server.use(cors({origin: true, credentials: true}));
+
+// AUTORISATION DE L'UTILILISATION DE L'API DU HEADER
+server.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
   res.header(
     'Access-Control-Allow-Headers',
@@ -32,12 +35,11 @@ const limiter = rateLimit({
     max: 100 // limit each IP to 100 requests per windowMs
   });
 
+// Utilisation de JSON pour le flux de données
+server.use(express.json());
+server.use(express.urlencoded({ extended: false }));
 
-// Body Parser configuration
-server.use(bodyParser.urlencoded({ extended: true }));
-server.use(bodyParser.json());
-
-// Configure routes
+// Configuration des routes
 server.get('/', limiter, function (req, res) {
     res.setHeader('Content-Type', 'text/html');
     res.status(200).send('<h1>Bonjour sur mon super server</h1>');
@@ -47,6 +49,6 @@ server.get('/', limiter, function (req, res) {
 server.use('/api/', apiRouter);
 
 // Launch server
-server.listen(8080, function() {
+server.listen(process.env.PORT, function() {
     console.log('Server en écoute :)');
 });
