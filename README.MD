@@ -1,5 +1,5 @@
-PROJET GROUPOMANIA - ANTOINE ERNOUF © 2021
-====================================================
+PROJET GROUPOMANIA - ANTOINE ERNOUF - © 2021
+
 
 ⇢ Présentation :
 <br> Groupomania est un réseau social d'entreprise.
@@ -35,10 +35,9 @@ PROJET GROUPOMANIA - ANTOINE ERNOUF © 2021
 `Installer Express-rate-limit`
 
 <br>Base de données :
-<br>▹ Vérifier que les informations contenues dans le fichier config.json sont correctes et correspondent à votre base de données
-<br>▹ Exécutez `sequelize model:create --attributes "username:string email:string password:string" --name User` pour créer la table des utilisateurs et reproduire la même procédure pour chaque table;
-<br>▹ Exécutez `sequelize db:migrate` pour intégrer les modèles créés dans la base de données ;
-<br>Lancer le backend avec `Nodemon start`
+<br> ▹ Exécutez `sequelize model:create --attributes "username:string email:string password:string" --name User` pour créer la table des utilisateurs et reproduire la même procédure pour chaque table;
+<br> ▹ Exécutez `sequelize db:migrate` pour intégrer les modèles créés dans la base de données ;
+<br> ▹ Lancer le backend avec `Nodemon start`
 
 <br>Frontend :
 <br>▹ A partir du dossier frontend et du sous-dossier vue-groupomania, exécutez `npm start` ;
