@@ -7,7 +7,7 @@ const rateLimit   = require("express-rate-limit");
 require('dotenv').config({path: './config/.env'});
 
 // Création d'app express
-var server = express();
+const server = express();
 
 // Sécurisation
 server.use(helmet());
@@ -21,10 +21,14 @@ server.use(cors({origin: true, credentials: true}));
 
 // AUTORISATION DE L'UTILILISATION DE L'API DU HEADER
 server.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
-  res.header(
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, PATCH, OPTIONS"
   );
   next();
 });
