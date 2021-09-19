@@ -19,7 +19,7 @@ server.use(morgan("dev"));
 var cors = require('cors');
 server.use(cors({origin: true, credentials: true}));
 
-// AUTORISATION DE L'UTILILISATION DE L'API DU HEADER
+// AUTORISATION DE L'UTILISATION DE L'API DU HEADER
 server.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
@@ -39,7 +39,7 @@ const limiter = rateLimit({
     max: 100 // limit each IP to 100 requests per windowMs
   });
 
-// Utilisation de JSON pour le flux de données
+// Transformer le body de la requête en JSON
 server.use(express.json());
 server.use(express.urlencoded({ extended: false }));
 
