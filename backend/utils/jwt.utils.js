@@ -1,7 +1,7 @@
 // Imports
 var jwt = require('jsonwebtoken');
 
-const JWT_SIGN_SECRET = '<JWT_SIGN_TOKEN>';
+const JWT_SIGN_SECRET = 'test13131';
 
 // Exported functions
 module.exports = {
@@ -30,4 +30,4 @@ module.exports = {
     }
     return userId;
   }
-}
+} 

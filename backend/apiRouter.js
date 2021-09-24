@@ -1,8 +1,8 @@
 // Imports
 var express      = require('express');
-var usersCtrl    = require('./routes/usersCtrl');
-var messagesCtrl = require('./routes/messagesCtrl');
-var likesCtrl    = require('./routes/likesCtrl');
+var usersCtrl    = require('./controllers/usersCtrl');
+var messagesCtrl = require('./controllers/messagesCtrl');
+var likesCtrl    = require('./controllers/likesCtrl');
 
 // Router
 exports.router = (function() {

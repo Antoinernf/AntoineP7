@@ -19,7 +19,7 @@ server.use(morgan("dev"));
 var cors = require('cors');
 server.use(cors({origin: true, credentials: true}));
 
-// AUTORISATION DE L'UTILISATION DE L'API DU HEADER
+// AUTORISATION DE L'UTILILISATION DE L'API DU HEADER
 server.use(function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(

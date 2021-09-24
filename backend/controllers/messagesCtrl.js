@@ -1,7 +1,7 @@
 // Imports
-var models   = require('../models');
-var asyncLib = require('async');
-var jwtUtils = require('../utils/jwt.utils');
+const models   = require('../models');
+const asyncLib = require('async');
+const jwtUtils = require('../utils/jwt.utils');
 
 // Constants
 const TITLE_LIMIT   = 2;

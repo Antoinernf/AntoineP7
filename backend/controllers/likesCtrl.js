@@ -1,7 +1,7 @@
 // Imports
-var models   = require('../models');
-var jwtUtils = require('../utils/jwt.utils');
-var asyncLib = require('async');
+const models   = require('../models');
+const jwtUtils = require('../utils/jwt.utils');
+const asyncLib = require('async');
 
 // Constants
 const DISLIKED = 0;
