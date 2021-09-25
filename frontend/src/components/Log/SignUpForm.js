@@ -35,10 +35,10 @@ const SignUpForm = () => {
         } else {
           await axios({
             method: "post",
-            url: "http://localhost:8080/api/users/register",
+            url: "http://localhost:8080/api/user/signup",
             data: {
-              email,
               username,
+              email,
               password
             },
           })

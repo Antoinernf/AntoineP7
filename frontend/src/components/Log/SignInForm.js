@@ -10,7 +10,7 @@ const SignInForm = () => {
     const emailError = document.querySelector(".email.error");
     const passwordError = document.querySelector(".password.error");
 
-    axios.post("http://localhost:8080/api/users/login", {
+    axios.post("http://localhost:8080/api/user/login", {
         email: email,
         password: password,
       })
