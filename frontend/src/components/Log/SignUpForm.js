@@ -3,8 +3,8 @@ import axios from 'axios';
 import SignInForm from "./SignInForm";
 
 const SignUpForm = () => {
-    // Importation des useStates
-    const [formSubmit, setFormSubmit] = useState(false);
+    // Importation des useStates pour faire passer les valeurs des formulaires. Par defaut on met des strings vides
+    const [formSubmit, setFormSubmit] = useState(false); // Est ce que le formSubmit est envoyé ? Par defaut FALSE : Non. Lien avec ligne 66 
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -13,18 +13,22 @@ const SignUpForm = () => {
     // Gestion du formulaire : Prendre en compte l'enregistrement de l'utilisateur
     const handleRegister = async (e) => {
         e.preventDefault();
+        // Gestion des messages d'erreurs en lien avec le back
         const terms = document.getElementById("terms");
         const usernameError = document.querySelector(".username.error");
         const emailError = document.querySelector(".email.error");
-        const passwordError = document.querySelector(".password.error");
-        const passwordConfirmError = document.querySelector(
+        const passwordError = document.querySelector(".password.error"); 
+        // Gestion des messages d'erreur en front
+        const passwordConfirmError = document.querySelector(  
           ".password-confirm.error"
         );
-        const termsError = document.querySelector(".terms.error");
+        const termsError = document.querySelector(".terms.error"); 
     
+        // On réinjecte des string vide à chaque relance de formulaire (permet de faire disparaitre le message d'erreur)
         passwordConfirmError.innerHTML = "";
         termsError.innerHTML = "";
-    
+     
+        // Vérification en front pour le password identique et conditions générales
         if (password !== controlPassword || !terms.checked) {
           if (password !== controlPassword)
             passwordConfirmError.innerHTML =
@@ -32,16 +36,16 @@ const SignUpForm = () => {
     
           if (!terms.checked)
             termsError.innerHTML = "Veuillez valider les conditions générales";
-        } else {
+        } else { // Quand tout est bon, on importe l'API pour envoyer les données en Post.
           await axios({
             method: "post",
-            url: "http://localhost:8080/api/user/signup",
+            url: "http://localhost:8080/api/signup",
             data: {
               username,
               email,
               password
             },
-          })
+          }) // On va rechercher le contenu des messages d'erreurs
             .then((res) => {
               console.log(res);
               if (res.data.errors) {
@@ -56,7 +60,7 @@ const SignUpForm = () => {
         }
       };
 
-
+ // Condition ternaire : On arrive par default sur le formulaire. Et quand le formulaire est valide alors on envoie le contenu de réussite d'inscription avec "formSubmit" déclaré ligne 7
       return (
         <>
           {formSubmit ? (
@@ -64,7 +68,7 @@ const SignUpForm = () => {
               <SignInForm />
               <span></span>
               <h4 className="success">
-                Enregistrement réussi, veuillez-vous connecter
+                Enregistrement réussi ! Merci de vous connecter
               </h4>
             </>
           ) : (
@@ -130,4 +134,3 @@ const SignUpForm = () => {
     };
     
     export default SignUpForm;
-    

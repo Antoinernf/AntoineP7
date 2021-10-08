@@ -1,13 +1,18 @@
 // Importation package
-const express = require('express');
-const helmet = require('helmet');
-const rateLimit   = require("express-rate-limit");
+const express = require('express'),
+    helmet = require('helmet'),
+    rateLimit   = require("express-rate-limit"),
+    cors = require('cors');
+const {checkUser, requireAuth} = require('./middleware/auth.middleware');
 
-// Permet d'accéder au chemin du système de fichiers
-const path = require('path');
+const fs = require('fs');
 
 // Permet de créer l'application express
 const app = express();
+
+// Transforme le corps de la requête en objet JS
+app.use(express.json({limit: '10mb'})); // Requêtes API ou AJAX + Accepte une limite de 500mb
+app.use(express.urlencoded({limit: '10mb', extended: true })); // Pour les formulaires POST + Accepte une limite de 500mb
 
 // Sécurisation avec RateLimiter
 const limiter = rateLimit({
@@ -15,39 +20,28 @@ const limiter = rateLimit({
     max: 100 // limit each IP to 100 requests per windowMs
   });
 
-
-// Middleware d'authorisation CORS
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-    next();
-});
-
-// Part 2
-const cors = require('cors');
+// Authorisation CORS
 app.use(cors({origin: true, credentials: true}));
 
 // Importation des fichiers dédiés aux routes de l'app
-// Permet d'importer les routers user 
-const userRoutes = require('./routes/user');
-
-// Transforme le corps de la requête en objet JS
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
+require('./routes/auth')(app); // Importation des routes sur l'utilisateur
+require('./routes/user')(app); // Importation des routes sur l'édition des informations utilisateurs
+require('./routes/message')(app); // Importation des routes sur les publications et la gestion des likes et commentaires
+require('./routes/like')(app); // Importation des routes sur la gestion des likes
 
 // Permet de configurer les en-têtes HTTP de manière sécurisée
 app.use(helmet());
 
-// Configuration des routes
-app.get('/', limiter, function (req, res) {
-    res.setHeader('Content-Type', 'text/html');
-    res.status(200).send('<h1>Bonjour sur mon super server</h1>');
-});
+// Message par defaut
+ app.use((req, res) => {
+     res.status(200).send("Bonjour, le serveur est en marche !");
+})
 
-// Permet d'accéder aux routes pour les utilisateurs
-app.use('/api/user', userRoutes);
+// Export du JWT pour le front pour checker les utilisateur et les déconnecter
+app.get('*', checkUser);
+app.get('/jwtid', requireAuth, (req, res) => {
+  res.status(200).send(res.locals.user._id)
+});
 
 // Permet d'exporter l'application express pour pouvoir y accéder depuis les autres fichiers du projet 
 module.exports = app;

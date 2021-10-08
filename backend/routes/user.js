@@ -1,23 +1,19 @@
-// Permet d'importer express
-const express = require('express');
-
-// Crée un routeur
-const router = express.Router();
+const express = require("express");
+const authRouter = express.Router(); // Crée un routeur
 
 // Permet d'importer le controller utilisateurs
-const userCtrl = require('../controllers/user');
-
-// Permet d'importer le middleware auth
-    // const auth = require('../middleware/auth');
-    // const multer = require('../middleware/multer-config');
-
-
-// Routes de l'API pour les utilisateurs
-    router.post('/signup', userCtrl.signup);
-    router.post('/login', userCtrl.login);
-    // router.get('/:id', auth, userCtrl.getUserProfile);
-    // router.put('/:id', auth, multer, userCtrl.modifyUserProfile);
-    // router.delete('/:id', auth, userCtrl.deleteAccount);
+const userCtrl = require("../controllers/user");
 
 // Permet d'exporter le router
-module.exports = router;
+module.exports = (app) => {
+  const auth = require("../middleware/auth"); // Permet d'importer le middleware auth pour la gestion du token JWT
+  const multer = require("../middleware/multer-config");
+
+  // Routes de l'API pour les utilisateurs
+  authRouter.get("/user/:id", auth, userCtrl.getUserProfile);
+  authRouter.patch("/user/:id", auth, multer, userCtrl.modifyUserProfile);
+  authRouter.delete("/user/:id", auth, userCtrl.deleteAccount);
+
+  // Mettre la racine /api à toutes nos routes
+  app.use("/api", authRouter);
+};

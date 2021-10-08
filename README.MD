@@ -33,12 +33,16 @@
 `Installer Async`
 `Installer Helmet`
 `Installer Express-rate-limit`
+'Installer Cors`
 
 <br>Base de données :
-<br> ▹ Exécutez `sequelize model:create --attributes "username:string email:string password:string" --name User` pour créer la table des utilisateurs et reproduire la même procédure pour chaque table;
+<br> ▹ Pour créer la table des utilisateurs `sequelize model:create --attributes "username:string email:string password:string" --name User` 
+<br> ▹ Pour créer la table des messages `sequelize model:create --attributes "title:string content:string attachment:string likes:string --name Message`
+<br> ▹ Pour créer la table des likes `sequelize model:create --attributes "messageId:integer userId:integer isLike:integer --name Like`
+
 <br> ▹ Exécutez `sequelize db:migrate` pour intégrer les modèles créés dans la base de données ;
 <br> ▹ Lancer le backend avec `Nodemon start`
 
 <br>Frontend :
-<br>▹ A partir du dossier frontend et du sous-dossier vue-groupomania, exécutez `npm start` ;
-<br>▹ Le frontend de l'application doit fonctionner sur `localhost` avec le port par défaut `8080`.
+<br>▹ A partir du dossier frontend, exécutez `npm start` ;
+<br>▹ Le frontend de l'application doit fonctionner sur `localhost` avec le port par défaut `3000`.
