@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from "react-router-dom";
 
-const Logout = () => {
+const LogoutBtn = () => {
 
     const clearLocalStorage = () => {
         JSON.parse(localStorage.removeItem("userLogin"))
@@ -10,11 +10,10 @@ const Logout = () => {
     return (
         <li onClick={clearLocalStorage}>
             <NavLink exact to ="/">
-                <img src="./img/logout.png" alt="login"/>
-                <p> Deconnexion </p>
+                <button> Deconnexion </button>
             </NavLink>
         </li>
     )
 }
 
-export default Logout;
+export default LogoutBtn;

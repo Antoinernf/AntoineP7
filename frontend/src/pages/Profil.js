@@ -1,15 +1,34 @@
 import React, {useContext} from 'react';
 import Log from '../components/Log';
-import { UidContext } from '../components/AppContext'; // Import de UidContext pour savoir si notre utilisateur est connecté ou pas
+import {NavLink} from "react-router-dom";
+import LogoutBtn from "../components/Log/LogoutBtn";
+import {checkUser} from "../components/Log/checkUser";
+import {nameStorage} from "../components/Log/nameStorage";
 
 const Profil = () => {
-
-    const uid = useContext(UidContext); // On stock la data avec le hook useContext. Notre variable uid aura l'id de notre utilisateur seulement si il est connecté
-    console.log(uid);
+    console.log('checkUser', checkUser())
+    console.log(nameStorage);
+    
     return( // JSX
         <div className="profil-page">
-            {uid ? ( // Conditions ternaires : A ton un uid : ID de l'utilisateur ? Si oui alors affiche ce contenu :
-                <h1> CONTENU QUAND PROFIL CONNECTE </h1>
+            {checkUser() ? ( // Condition ternaire connecté / déconnecté
+                 <div className="profil-container">
+                 <div className="update-container">
+                     
+                 <div className="left-part">
+                     <h1> Bonjour {nameStorage} </h1>
+                     <img src="./img/profil.png" alt="userProfil" />
+                 </div>
+                 <div className="right-part">
+                     <h1> Que vous voulez faire ? </h1>
+                     <NavLink exact to ="/"> <button> Voir mes postes</button> </NavLink>
+                     <NavLink exact to ="/"> <button> Publier un poste </button> </NavLink>
+                     <LogoutBtn/>
+                     <button> Supprimer mon compte </button>
+                     <button> Contacter le service technique </button> 
+                 </div>
+                 </div>
+             </div>
             ) : ( // Si non alors affiche le contenu d'un utilisateur non connecté. ici on importe les modules de signIn/SignUp
             <div className="log-container">
                 <Log signin={false} signup={true} /> 

@@ -1,11 +1,9 @@
-import React, { useContext } from "react";
-// import { useSelector } from "react-redux";
+import React from "react";
 import { NavLink } from "react-router-dom";
-import { UidContext } from "./AppContext";
-// import Logout from "./Log/Logout";
-
+import Logout from "./Log/Logout";
+import {checkUser} from "../components/Log/checkUser";
 const Navbar = () => {
-  const uid = useContext(UidContext);
+
 
     return (
         <nav>
@@ -17,26 +15,37 @@ const Navbar = () => {
                         </div>
                     </NavLink>
                 </div>
-                { uid ? (
+                { checkUser() ? (
                     <ul>
-                         <li> 
-                             
-                         </li>
 
-                         <li className="welcome">
-                            <NavLink exact to ="/profil">
-                                <h5> Bienvenu Antoine </h5>
+                        <li>
+                            <NavLink exact to ="/">
+                             Fil d'actualité
+                            </NavLink>
+                         </li>
+                         <li> 
+                            <NavLink exact to="/profil"> 
+                             Page profil
                             </NavLink>
                          </li>
 
-                        logo  logout
-
+                        <li>
+                            <Logout/>
+                        </li>
                     </ul>
                 ) : ( 
                     <ul>
+
+                         <li> 
+                            <NavLink exact to="/profil"> 
+                             Créer un compte
+                            </NavLink>
+                         </li>
+
                         <li>
                             <NavLink exact to="/profil"> 
                                 <img src="./img/login.png" alt="login"/>
+                                <p> Connexion </p>
                             </NavLink>
                         </li>
                     </ul>

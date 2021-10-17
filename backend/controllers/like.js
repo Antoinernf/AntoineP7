@@ -18,26 +18,28 @@ exports.setLike = (req, res, next) => {
                   userId: req.body.userId
                  }, // Récupération de l'id du message
      })
-     .then(like => {
-            db.Like.update({
-                isLike: !like.isLike
-            },{where: { messageId: like.messageId,
-                userId: like.userId
-               },})
+        .then(like => {
+                db.Like.update({
+                    isLike: !like.isLike
+                },{where: { messageId: like.messageId,
+                    userId: like.userId
+                },})
+                .then(success => {
+                    res.status(200).json({ message: "Mise à jour du like" })
+                })
+                .catch(error => res.status(404).json({ error: "BAD REQUEST" }));
+            })
+        .catch(error => {
+            console.log("Entre dans le create");
+
+            db.Like.create({ 
+                messageId: req.body.postId, 
+                userId: req.body.userId,
+                isLike: true
+            })
             .then(success => {
-                res.status(200).json({ msg: "OK" })
+                res.status(200).json({ message: "Publication liké" })
             })
             .catch(error => res.status(404).json({ error: "BAD REQUEST" }));
-        })
-    .catch(error => {
-        db.Like.create({ 
-            messageId: req.body.postId, 
-            userId: req.body.userId,
-            isLike: true
-        })
-        .then(success => {
-            res.status(200).json({ msg: "OK" })
-        })
-        .catch(error => res.status(404).json({ error: "BAD REQUEST" }));
-    })  
+        }) 
 }

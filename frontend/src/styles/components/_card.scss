@@ -1,4 +1,11 @@
+.titreFeed{
+  text-align: center;
+  font-size: 0.7em;
+  color: grey;
+}
+
 .card-container {
+  width: 50%;
   display: grid;
   grid-template-columns: 66px 1fr;
   border: 2px solid $color-2;
@@ -49,6 +56,13 @@
     @media screen and(max-width: 590px) {
       margin-left: 18px;
     }
+
+    span {
+      font-size: 0.6em;
+      text-transform: capitalize;
+      color: grey;
+    }
+
     .card-header {
       display: flex;
       justify-content: space-between;
@@ -64,6 +78,7 @@
 
       .pseudo {
         display: flex;
+        font-size: 0.5em;
 
         @media screen and(max-width: 590px) {
           margin-left: 52px;
@@ -402,3 +417,4 @@
     }
   }
 }
+

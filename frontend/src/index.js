@@ -1,25 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
 import "./styles/index.scss";
-import { Provider } from "react-redux";
-import { applyMiddleware, createStore } from "redux";
-import thunk from "redux-thunk";
-import rootReducer from "./reducers"; // Importer nos reduceurs reducers > index
-
-// dev tools
-import { composeWithDevTools } from "redux-devtools-extension";
-
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
-);
-
-
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import Home from './pages/Home';
+import Profil from './pages/Profil';
+import Navbar from './components/Navbar';
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById("root")
+      <Router>
+          <Navbar />
+
+          <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/profil" exact component={Profil} />
+              <Redirect to="/" />
+          </Switch>
+    </Router>,
+    document.getElementById("root")
 );

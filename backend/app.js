@@ -3,7 +3,7 @@ const express = require('express'),
     helmet = require('helmet'),
     rateLimit   = require("express-rate-limit"),
     cors = require('cors');
-const {checkUser, requireAuth} = require('./middleware/auth.middleware');
+const authController = require('./middleware/auth');
 
 const fs = require('fs');
 
@@ -36,12 +36,6 @@ app.use(helmet());
  app.use((req, res) => {
      res.status(200).send("Bonjour, le serveur est en marche !");
 })
-
-// Export du JWT pour le front pour checker les utilisateur et les déconnecter
-app.get('*', checkUser);
-app.get('/jwtid', requireAuth, (req, res) => {
-  res.status(200).send(res.locals.user._id)
-});
 
 // Permet d'exporter l'application express pour pouvoir y accéder depuis les autres fichiers du projet 
 module.exports = app;

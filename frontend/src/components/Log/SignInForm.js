@@ -4,11 +4,10 @@ import axios from "axios";
 const SignInForm = () => {
   const [email, setEmail] = useState(""); // UseState avec comme valeur vide par defaut
   const [password, setPassword] = useState(""); // (...)
-
+  const [error, setError] = useState(""); // (...)
   const handleLogin = (e) => { // Prend en charge le login avec handleLogin
     e.preventDefault(); // Pas de rechargement total de la page en React
-    const emailError = document.querySelector(".email.error"); // Contient le contenu de l'erreur email
-    const passwordError = document.querySelector(".password.error"); // (...password)
+    const errorSend = document.querySelector(".password.error"); // (...password)
 
     //Appel à l'API avec Axios
     axios.post("http://localhost:8080/api/login", {
@@ -16,18 +15,19 @@ const SignInForm = () => {
         password: password,
       })
         .then((res) => {
-            console.log(res);
-            if (res.data.errors) { // Si il a une erreur de connexion
-            emailError.innerHTML = res.data.errors.email;
-            passwordError.innerHTML = res.data.errors.password;
-            // console.log(res.data.errors.email); // Gérer les messages d'erreurs d'envoie du formulaire
-            // console.log(res.data.errors.password); // Gérer les messages d'erreurs d'envoie du formulaire 
-            } else { // Si la connexion est réussie
-            // window.location = "/"; // Renvoyer vers la page d'accueil une fois connecté. A activer.
-            }
+          console.log('res', res);
+          localStorage.setItem('userLogin', JSON.stringify(res.data))
+          console.log("connexion réussite");
+          console.log("Voici la réponse du LS", JSON.parse(localStorage.getItem("userLogin").token)); // Mettre les données dans le localStor
+          // window.location = "/"; // Renvoyer vers la page d'accueil une fois connecté. A activer.
+          return setError('conenxion réussi'); // Retrait du message d'erreur
         })
+
         .catch((err) => {
-            console.log(err);
+            console.error(err,'==>',  err);
+            // Afficher l'erreur à l'écran
+            return setError("Erreur lors de l'identification") // On va chercher les erreurs que renvoi l'api pour la connexion
+
         });
         console.log(email);
 
@@ -56,9 +56,11 @@ const SignInForm = () => {
         onChange={(e) => setPassword(e.target.value)}
         value={password}
       />
+      <br />
       <div className="password error"></div>
       <br />
       <input type="submit" value="Se connecter" />
+      {error && <div>{error}</div>}
     </form>
   );
 };
